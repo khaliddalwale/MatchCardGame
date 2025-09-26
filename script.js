@@ -1,14 +1,5 @@
-// Animal image URLs (public domain or free to use)
-const animalImages = [
-    { name: "Lion", img: "https://cdn.pixabay.com/photo/2017/01/06/19/15/lion-1959955_1280.png", alt: "Lion" },
-    { name: "Elephant", img: "https://cdn.pixabay.com/photo/2014/04/03/10/32/elephant-312166_1280.png", alt: "Elephant" },
-    { name: "Monkey", img: "https://cdn.pixabay.com/photo/2013/07/12/13/49/monkey-147720_1280.png", alt: "Monkey" },
-    { name: "Panda", img: "https://cdn.pixabay.com/photo/2016/03/31/19/58/panda-1295162_1280.png", alt: "Panda" },
-    { name: "Tiger", img: "https://cdn.pixabay.com/photo/2014/12/21/23/28/tiger-578447_1280.png", alt: "Tiger" },
-    { name: "Zebra", img: "https://cdn.pixabay.com/photo/2017/01/31/19/15/zebra-2020999_1280.png", alt: "Zebra" },
-    { name: "Frog", img: "https://cdn.pixabay.com/photo/2012/04/01/17/33/frog-24173_1280.png", alt: "Frog" },
-    { name: "Penguin", img: "https://cdn.pixabay.com/photo/2013/07/12/17/00/penguin-149510_1280.png", alt: "Penguin" }
-];
+// Numbers 1-8 for 8 pairs (4x4 grid)
+const numbers = [1,2,3,4,5,6,7,8];
 
 // Game state variables
 let firstCard = null, secondCard = null, lockBoard = false, matchedPairs = 0;
@@ -29,13 +20,13 @@ function shuffle(array) {
     return array;
 }
 
-function createCard(animal, idx) {
+function createCard(number, idx) {
     // card structure: button.card > div.card-inner > div.card-front & div.card-back
     const card = document.createElement('button');
     card.classList.add('card');
-    card.setAttribute('aria-label', "Hidden animal card");
+    card.setAttribute('aria-label', "Hidden number card");
     card.setAttribute('tabindex', 0);
-    card.dataset.animal = animal.name;
+    card.dataset.number = number;
     card.dataset.index = idx;
 
     const cardInner = document.createElement('div');
@@ -46,15 +37,10 @@ function createCard(animal, idx) {
     front.classList.add('card-front');
     front.innerHTML = "❓";
 
-    // Card Back (animal)
+    // Card Back (number)
     const back = document.createElement('div');
     back.classList.add('card-back');
-    const img = document.createElement('img');
-    img.src = animal.img;
-    img.alt = animal.alt;
-    img.width = 60;
-    img.height = 60;
-    back.appendChild(img);
+    back.textContent = number;
 
     cardInner.appendChild(front);
     cardInner.appendChild(back);
@@ -80,10 +66,10 @@ function setupBoard() {
     winMessage.classList.add('hidden');
 
     // Duplicate and shuffle
-    const selectedAnimals = animalImages.slice(0, (gridSize * gridSize) / 2); // 8 pairs
-    const cardSet = shuffle([...selectedAnimals, ...selectedAnimals]);
-    cardSet.forEach((animal, idx) => {
-        board.appendChild(createCard(animal, idx));
+    const selectedNumbers = numbers.slice(0, (gridSize * gridSize) / 2); // 8 pairs
+    const cardSet = shuffle([...selectedNumbers, ...selectedNumbers]);
+    cardSet.forEach((number, idx) => {
+        board.appendChild(createCard(number, idx));
     });
 }
 
@@ -100,7 +86,7 @@ function flipCard(card) {
     lockBoard = true;
 
     // Check for match
-    if (firstCard.dataset.animal === secondCard.dataset.animal) {
+    if (firstCard.dataset.number === secondCard.dataset.number) {
         setTimeout(() => {
             matchSound.currentTime = 0;
             matchSound.play();
