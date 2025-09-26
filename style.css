@@ -1,0 +1,113 @@
+body {
+    background: linear-gradient(135deg, #f9d423 0%, #ff4e50 100%);
+    min-height: 100vh;
+    font-family: 'Comic Sans MS', 'Comic Sans', cursive, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+}
+
+h1 {
+    color: #fff;
+    text-shadow: 2px 2px 0 #ff9966;
+    margin-top: 30px;
+    font-size: 2.5em;
+    letter-spacing: 2px;
+}
+
+#game-board {
+    display: grid;
+    grid-template-columns: repeat(4, 90px);
+    grid-gap: 16px;
+    margin: 40px 0;
+    justify-content: center;
+}
+
+.card {
+    width: 90px;
+    height: 120px;
+    perspective: 600px;
+    cursor: pointer;
+    border: none;
+    background: none;
+    outline: none;
+}
+
+.card-inner {
+    width: 100%;
+    height: 100%;
+    transition: transform 0.5s;
+    transform-style: preserve-3d;
+    position: relative;
+}
+
+.card.flipped .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 14px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.20);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2em;
+    backface-visibility: hidden;
+}
+
+.card-front {
+    background: #fff;
+    border: 2px solid #f9d423;
+    color: #333;
+    font-size: 2.1em;
+    box-sizing: border-box;
+}
+
+.card-back {
+    background: linear-gradient(135deg, #ff9966 0%, #ff5e62 100%);
+    color: #fff;
+    font-size: 2.5em;
+    transform: rotateY(180deg);
+    justify-content: center;
+    align-items: center;
+}
+
+#win-message {
+    text-align: center;
+    background: #fffbe7;
+    border: 2px solid #f9d423;
+    border-radius: 20px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.10);
+    padding: 30px;
+    position: fixed;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+}
+
+#win-message.hidden {
+    display: none;
+}
+
+#restart-btn {
+    margin-top: 16px;
+    background: #ff9966;
+    color: #fff;
+    font-size: 1.2em;
+    padding: 10px 32px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    transition: background 0.2s;
+}
+
+#restart-btn:hover {
+    background: #f9d423;
+    color: #ff4e50;
+}
